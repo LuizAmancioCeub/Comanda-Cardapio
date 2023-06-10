@@ -1,0 +1,133 @@
+ body{
+        font-family: 'Roboto', sans-serif;
+        }
+
+        /* estilizando a div orverlay */
+        .overlay {
+        height: 100vh; /* deixando o overlay 100% na vertical */
+        width: 0;
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: #f5f5f5ad;
+        opacity: 0; /*iniciando opacidade em 0 */
+        transition: opacity 1s;
+        }
+
+        /* estilizando o botão abrir menu */
+        .menu-open{
+        font-size: 50px;
+        text-decoration: none;
+        margin-left: 5px;
+        display: inline-block;
+        text-transform: uppercase;
+        }
+
+        /* estilizando o botão fechar menu */
+        .menu a.menu-close {
+        padding: 8px 0 4px 23px;
+        color: #6B6B6B;
+        display: block;
+        margin: -40px 0 -10px 110px;
+        font-size: 50px;
+        text-decoration: none;
+        }
+
+        /* estilizando o menu em si */
+        .menu {
+        overflow: hidden;
+        background: rgba(0, 0, 0, 0.85);
+        padding: 40px 0 0 40px;
+        position: fixed;
+        top: 0;
+        left: -290px; /*iniciando o menu com menos 290px para fora do browser*/
+        height: 100%;
+        z-index: 2;
+        transition: 1.0s;
+        width: 230px;
+        border-top-right-radius: 30px;
+        }
+
+        /* estilizando o menu + ul */
+        .menu ul{
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        overflow-y: auto;
+        width: 500px;
+        height: 95%;
+        }
+
+        /* estilizando o menu + ul li + a */
+        .menu ul li a {
+        display: block;
+        
+        padding: 7px 4px 6px 4px;
+        margin-left:-4px;
+        color: #ffffff;
+        transition: 0.3s;
+        text-decoration: none;
+        margin-top: 20px;
+        }
+        
+        .dropbtn {
+          background-color: #7700C8;
+          color: white;
+          padding: 10px;
+          font-size: 16px;
+          border: none;
+          cursor: pointer;
+          border-radius:30px;
+         border:2px solid pink;
+        }
+
+    .dropdown {
+        margin-top:5px;
+        border-radius:20px;
+        margin-left: 90%;
+        position: relative;
+        display: inline-block;
+        position: sticky;
+        top: 10px;
+        z-index: 1000;
+    }
+
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        padding:5px;
+       margin-left:-130px;
+        background-color: #f9f9f9;
+        min-width: 180px;
+        
+        box-shadow: 0px 8px 16px 0px rgb(119,0,200,0.3);
+        z-index: 1;
+        border-radius: 20px 0px 20px 20px;
+    }
+
+    .dropdown-content a {
+        color: black;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+    }
+
+    .dropdown-content a:hover {background-color: #f1f1f1}
+
+    .dropdown:hover .dropdown-content {
+        display: block;
+    }
+
+        @media only screen and (max-width: 800px){
+        .dropdown {
+        margin-top:10px;
+        border-radius:20px;
+        position: relative;
+        display: inline-block;
+        position: sticky;
+        top: 10px;
+        z-index: 1000;
+    }
+
+        }
+        

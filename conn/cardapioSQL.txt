@@ -1,0 +1,180 @@
+
+-- -----------------------------------------------------
+-- Schema cardapio
+-- -----------------------------------------------------
+CREATE SCHEMA IF NOT EXISTS `cardapio` ;
+USE `cardapio` ;
+
+-- -----------------------------------------------------
+-- Table `cardapio`.`categorias`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `cardapio`.`categorias` (
+  `idCategorias` INT(11) NOT NULL AUTO_INCREMENT,
+  `categoria` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`idCategorias`),
+  UNIQUE INDEX `categoria_UNIQUE` (`categoria` ASC) )
+ENGINE = InnoDB
+AUTO_INCREMENT = 7
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `cardapio`.`itens`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `cardapio`.`itens` (
+  `idItens` INT(11) NOT NULL AUTO_INCREMENT,
+  `item` VARCHAR(45) NOT NULL,
+  `preco` FLOAT NOT NULL,
+  `descricao` VARCHAR(145) NOT NULL,
+  `imagem` VARCHAR(145) NOT NULL,
+  `Categorias_idCategorias` INT(11) NOT NULL,
+  PRIMARY KEY (`idItens`),
+  INDEX `fk_Itens_Categorias1_idx` (`Categorias_idCategorias` ASC) ,
+  UNIQUE INDEX `item_UNIQUE` (`item` ASC) ,
+  CONSTRAINT `fk_Itens_Categorias1`
+    FOREIGN KEY (`Categorias_idCategorias`)
+    REFERENCES `cardapio`.`categorias` (`idCategorias`)
+    ON UPDATE CASCADE)
+ENGINE = InnoDB
+AUTO_INCREMENT = 5
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `cardapio`.`perfil`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `cardapio`.`perfil` (
+  `nivel` INT(11) NOT NULL,
+  `perfil` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`nivel`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4;
+
+
+-- -----------------------------------------------------
+-- Table `cardapio`.`usuario`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `cardapio`.`usuario` (
+  `idUsuario` INT(11) NOT NULL AUTO_INCREMENT,
+  `cpf` VARCHAR(45) NOT NULL,
+  `nome` VARCHAR(45) NOT NULL,
+  `email` VARCHAR(45) NOT NULL,
+  `senha` VARCHAR(10) NOT NULL,
+  `perfil_nivel` INT(11) NOT NULL,
+  PRIMARY KEY (`idUsuario`),
+  UNIQUE INDEX `cpf_UNIQUE` (`cpf` ASC) ,
+  INDEX `fk_usuario_perfil1_idx` (`perfil_nivel` ASC) ,
+  CONSTRAINT `fk_usuario_perfil1`
+    FOREIGN KEY (`perfil_nivel`)
+    REFERENCES `cardapio`.`perfil` (`nivel`)
+    ON UPDATE CASCADE)
+ENGINE = InnoDB
+AUTO_INCREMENT = 7
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `cardapio`.`pedido`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `cardapio`.`pedido` (
+  `idPedido` INT(11) NOT NULL AUTO_INCREMENT,
+  `valor` FLOAT NOT NULL,
+  `quantidade` INT(11) NOT NULL,
+  `status` INT(11) NOT NULL,
+  `horario` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP(),
+  `observacao` VARCHAR(145) NOT NULL,
+  `Itens_idItens` INT(11) NOT NULL,
+  `usuario_idUsuario` INT(11) NOT NULL,
+  PRIMARY KEY (`idPedido`),
+  INDEX `fk_Pedido_Itens1_idx` (`Itens_idItens` ASC) ,
+  INDEX `fk_pedido_usuario1_idx` (`usuario_idUsuario` ASC) ,
+  CONSTRAINT `fk_Pedido_Itens1`
+    FOREIGN KEY (`Itens_idItens`)
+    REFERENCES `cardapio`.`itens` (`idItens`)
+    ON UPDATE CASCADE,
+  CONSTRAINT `fk_pedido_usuario1`
+    FOREIGN KEY (`usuario_idUsuario`)
+    REFERENCES `cardapio`.`usuario` (`idUsuario`)
+    ON UPDATE CASCADE)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `cardapio`.`mesa`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `cardapio`.`mesa` (
+  `numero` INT NOT NULL,
+  `capacidade` INT NOT NULL,
+  `status` VARCHAR(20) NOT NULL,
+  PRIMARY KEY (`numero`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `cardapio`.`comanda`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `cardapio`.`comanda` (
+  `idComanda` INT(11) NOT NULL,
+  `valorTotal` FLOAT NOT NULL,
+  `horarioPronto` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP() ON UPDATE CURRENT_TIMESTAMP(),
+  `pedido_idPedido` INT(11) NOT NULL,
+  `usuario_idUsuario` INT(11) NOT NULL,
+  `mesa_numero` INT NOT NULL,
+  PRIMARY KEY (`idComanda`),
+  INDEX `fk_comanda_pedido1_idx` (`pedido_idPedido` ASC) ,
+  INDEX `fk_comanda_usuario1_idx` (`usuario_idUsuario` ASC) ,
+  INDEX `fk_comanda_mesa1_idx` (`mesa_numero` ASC) ,
+  CONSTRAINT `fk_comanda_pedido1`
+    FOREIGN KEY (`pedido_idPedido`)
+    REFERENCES `cardapio`.`pedido` (`idPedido`)
+    ON UPDATE CASCADE,
+  CONSTRAINT `fk_comanda_usuario1`
+    FOREIGN KEY (`usuario_idUsuario`)
+    REFERENCES `cardapio`.`usuario` (`idUsuario`)
+    ON UPDATE CASCADE,
+  CONSTRAINT `fk_comanda_mesa1`
+    FOREIGN KEY (`mesa_numero`)
+    REFERENCES `cardapio`.`mesa` (`numero`)
+    ON DELETE RESTRICT
+    ON UPDATE CASCADE)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+
+
+
+INSERT INTO `perfil` (`nivel`, `perfil`) VALUES
+(0, 'visitante'),
+(1, 'cliente'), 
+(2, 'admin');
+
+
+INSERT INTO `usuario` (`cpf`, `nome`, `email`, `senha`, `perfil_nivel`) VALUES
+( 'visitante', 'visitante', 'visitante@gmail.com', 'visitante', 0),
+( 'admin', 'admin', 'admin@gmail.com', 'admin', 2),
+( '08302963100', 'Luiz Amancio', 'luiz.amancio@sempreceub.com', '123456', 1);
+
+
+INSERT INTO `categorias` (`idCategorias`, `categoria`) VALUES
+(1, 'Ofertas'),
+(2, 'Hambúrgueres e Massas'),
+(3, 'Bebidas'),
+(4, 'Acompanhamentos'),
+(5, 'Sobremesas'),
+(6, 'Petiscos');
+
+
+INSERT INTO `itens` (`idItens`, `item`, `preco`, `descricao`, `Categorias_idCategorias`, `imagem`) VALUES
+(1, 'Macarronada Vai Dentro', 28.5, '500g Macarrão, Molho de tomate, queijo parmesão ralado.', 1, 'macarrao.jfif'),
+(2, 'X-Cabuloso', 28.5, 'Hambúrguer Artesanal na chapa - 200g de Picanha, 50g Queijo, Alface, Tomate, Cebola e 10g de Bacon.', 1, 'hamburguer.jfif'),
+(3, 'Lasanha à Bolonhesa', 26.9, 'Massa recheada com molho à bolonhesa, carne moída e presunto, coberta com molho branco e mussarela.', 1, 'lasanha.jfif'),
+(4, 'X-Vale Dois', 49.99, 'Dois Hambúrgueres - 500g de carne, alface, cheddar, tomate, cebola e Bacon.', 1, 'hamburguer2.jpg');
+
+INSERT INTO `mesa` (`numero`, `capacidade`,`status`) VALUES 
+(10, 4, 'Disponível'),
+(11, 6, 'Disponível'),
+(12, 8, 'Disponível'),
+(13, 10, 'Disponível')
+
+
