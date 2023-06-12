@@ -13,7 +13,7 @@
     $rowNome = $consulta->fetch();
     $nome = $rowNome['nome'];
 
-	
+
  ?>
 
 <!DOCTYPE html>
@@ -65,7 +65,7 @@ if($_SESSION['nivel'] == 2){
 			</div>
 			</a>
 
-			<a class="card" href="Comanda.php">
+			<a class="card" href="GerenciarComandas.php">
 			<div class="card__background" style="background-image: url(imagens/comanda.jpg)"></div>
 			<div class="card__content">
 				<p class="card__category">Comandas</p>
@@ -73,7 +73,7 @@ if($_SESSION['nivel'] == 2){
 			</div>
 			</a>
 
-			<a class="card" href="Comanda.php">
+			<a class="card" href="GerenciarPedidos.php">
 			<div class="card__background" style="background-image: URL(imagens/cozinha.jpg)"></div>
 			<div class="card__content">
 				<p class="card__category">Cozinha</p>
@@ -81,7 +81,7 @@ if($_SESSION['nivel'] == 2){
 			</div>
 			</a>
 
-			<a class="card" href="Comanda.php">
+			<a class="card" href="GerenciarMesas.php">
 			<div class="card__background" style="background-image: url(imagens/mesas.jpg)"></div>
 			<div class="card__content">
 				<p class="card__category">Mesas</p>

@@ -74,33 +74,6 @@ DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
--- Table `cardapio`.`pedido`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `cardapio`.`pedido` (
-  `idPedido` INT(11) NOT NULL AUTO_INCREMENT,
-  `valor` FLOAT NOT NULL,
-  `quantidade` INT(11) NOT NULL,
-  `status` INT(11) NOT NULL,
-  `horario` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP(),
-  `observacao` VARCHAR(145) NOT NULL,
-  `Itens_idItens` INT(11) NOT NULL,
-  `usuario_idUsuario` INT(11) NOT NULL,
-  PRIMARY KEY (`idPedido`),
-  INDEX `fk_Pedido_Itens1_idx` (`Itens_idItens` ASC) ,
-  INDEX `fk_pedido_usuario1_idx` (`usuario_idUsuario` ASC) ,
-  CONSTRAINT `fk_Pedido_Itens1`
-    FOREIGN KEY (`Itens_idItens`)
-    REFERENCES `cardapio`.`itens` (`idItens`)
-    ON UPDATE CASCADE,
-  CONSTRAINT `fk_pedido_usuario1`
-    FOREIGN KEY (`usuario_idUsuario`)
-    REFERENCES `cardapio`.`usuario` (`idUsuario`)
-    ON UPDATE CASCADE)
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8;
-
-
--- -----------------------------------------------------
 -- Table `cardapio`.`mesa`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `cardapio`.`mesa` (
@@ -112,12 +85,45 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
+-- Table `cardapio`.`pedido`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `cardapio`.`pedido` (
+  `idPedido` INT(11) NOT NULL AUTO_INCREMENT,
+  `valor` FLOAT NOT NULL,
+  `quantidade` INT(11) NOT NULL,
+  `status` INT(11) NOT NULL,
+  `horario` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP(),
+  `observacao` VARCHAR(145) NOT NULL,
+  `Itens_idItens` INT(11) NOT NULL,
+  `usuario_idUsuario` INT(11) NOT NULL,
+  `mesa_numero` INT NOT NULL,
+  PRIMARY KEY (`idPedido`),
+  INDEX `fk_Pedido_Itens1_idx` (`Itens_idItens` ASC) ,
+  INDEX `fk_pedido_usuario1_idx` (`usuario_idUsuario` ASC) ,
+  INDEX `fk_pedido_mesa1_idx` (`mesa_numero` ASC) ,
+  CONSTRAINT `fk_Pedido_Itens1`
+    FOREIGN KEY (`Itens_idItens`)
+    REFERENCES `cardapio`.`itens` (`idItens`)
+    ON UPDATE CASCADE,
+  CONSTRAINT `fk_pedido_usuario1`
+    FOREIGN KEY (`usuario_idUsuario`)
+    REFERENCES `cardapio`.`usuario` (`idUsuario`)
+    ON UPDATE CASCADE,
+  CONSTRAINT `fk_pedido_mesa1`
+    FOREIGN KEY (`mesa_numero`)
+    REFERENCES `cardapio`.`mesa` (`numero`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
 -- Table `cardapio`.`comanda`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `cardapio`.`comanda` (
-  `idComanda` INT(11) NOT NULL,
+  `idComanda` INT(11) NOT NULL AUTO_INCREMENT,
   `valorTotal` FLOAT NOT NULL,
-  `horarioPronto` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP() ON UPDATE CURRENT_TIMESTAMP(),
   `pedido_idPedido` INT(11) NOT NULL,
   `usuario_idUsuario` INT(11) NOT NULL,
   `mesa_numero` INT NOT NULL,
@@ -142,8 +148,6 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
 
-
-
 INSERT INTO `perfil` (`nivel`, `perfil`) VALUES
 (0, 'visitante'),
 (1, 'cliente'), 
@@ -165,11 +169,11 @@ INSERT INTO `categorias` (`idCategorias`, `categoria`) VALUES
 (6, 'Petiscos');
 
 
-INSERT INTO `itens` (`idItens`, `item`, `preco`, `descricao`, `Categorias_idCategorias`, `imagem`) VALUES
-(1, 'Macarronada Vai Dentro', 28.5, '500g Macarrão, Molho de tomate, queijo parmesão ralado.', 1, 'macarrao.jfif'),
-(2, 'X-Cabuloso', 28.5, 'Hambúrguer Artesanal na chapa - 200g de Picanha, 50g Queijo, Alface, Tomate, Cebola e 10g de Bacon.', 1, 'hamburguer.jfif'),
-(3, 'Lasanha à Bolonhesa', 26.9, 'Massa recheada com molho à bolonhesa, carne moída e presunto, coberta com molho branco e mussarela.', 1, 'lasanha.jfif'),
-(4, 'X-Vale Dois', 49.99, 'Dois Hambúrgueres - 500g de carne, alface, cheddar, tomate, cebola e Bacon.', 1, 'hamburguer2.jpg');
+INSERT INTO `itens` ( `item`, `preco`, `descricao`, `Categorias_idCategorias`, `imagem`) VALUES
+( 'Macarronada Vai Dentro', 28.5, '500g Macarrão, Molho de tomate, queijo parmesão ralado.', 1, 'macarrao.jfif'),
+( 'X-Cabuloso', 28.5, 'Hambúrguer Artesanal na chapa - 200g de Picanha, 50g Queijo, Alface, Tomate, Cebola e 10g de Bacon.', 1, 'hamburguer.jfif'),
+( 'Lasanha à Bolonhesa', 26.9, 'Massa recheada com molho à bolonhesa, carne moída e presunto, coberta com molho branco e mussarela.', 1, 'lasanha.jfif'),
+( 'X-Vale Dois', 49.99, 'Dois Hambúrgueres - 500g de carne, alface, cheddar, tomate, cebola e Bacon.', 1, 'hamburguer2.jpg');
 
 INSERT INTO `mesa` (`numero`, `capacidade`,`status`) VALUES 
 (10, 4, 'Disponível'),

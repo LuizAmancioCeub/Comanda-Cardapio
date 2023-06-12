@@ -38,7 +38,7 @@ require('conn/conn.php');
             <div class="inputBox">
                 <label for="mesa"> Sua Mesa </label>
                 <select name="mesa" id="mesa" required="required">
-                    <option disabled selected>Selecione</option>
+                    <option selected>Selecione</option>
                     <?php
                         foreach ($rowMesas as $linhamesas) {
                     ?>

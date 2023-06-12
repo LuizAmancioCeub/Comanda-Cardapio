@@ -43,7 +43,6 @@
     
     
     <link rel="stylesheet" type="text/css" href="css/Comanda.css">
-    <link rel="stylesheet" type="text/css" href="css/msg.css">
 </head>
 
 <body>
@@ -73,8 +72,8 @@
           <?php
            
 
-            $consulta = $pdo->prepare("SELECT idPedido,idItens,item, quantidade,valor,horario,observacao,preco FROM pedido JOIN itens ON idItens = Itens_idItens 
-                                        WHERE usuario_idusuario = '$idUsuario' AND status =1 ORDER BY horario DESC");
+            $consulta = $pdo->prepare("SELECT idPedido,idItens, item, quantidade,valor,horario,observacao,preco, mesa_numero FROM pedido JOIN itens ON idItens = Itens_idItens 
+                                        WHERE usuario_idusuario = '$idUsuario' AND status =1 ORDER BY horario ASC");
             $consulta->execute();
             if($consulta->rowCount() > 0){
                     echo "<table>";
@@ -98,7 +97,7 @@
                                 echo '<input type="hidden" name="idItens" value="'.$row['idItens'].'">';
                                 echo '<input type="hidden" name="idPedido" value="'.$row['idPedido'].'">';
                                 echo'<td data-title="Num Pedido">'.$row['idPedido'].'</td>';
-                                echo'<td data-title="Mesa">32</td>';
+                                echo'<td data-title="Mesa">'.$row['mesa_numero'].'</td>';
                                 echo'<td data-title="CPF">'.Mask("###.###.###-##",$cpf).'</td>';
                                 echo'<td data-title="Pedido">'.$row['item'].'</td>';
                                 echo'<td data-title="Quantidade">'.$row['quantidade'].'</td>';
@@ -242,12 +241,13 @@
                   </thead>
         <?php
                 while($row2 = $consulta2->fetch(PDO::FETCH_ASSOC)){
+
                     echo '<tbody>';
                     echo '<tr style="border-radius:20px;background-color:rgba(220, 220, 220, 0.45);>';
                     echo '<input type="hidden" name="idItens" value="'.$row2['idItens'].'">';
                     echo '<input type="hidden" name="idPedido" value="'.$row2['idPedido'].'">';
                     echo'<td data-title="Num Pedido">'.$row2['idPedido'].'</td>';
-                    echo'<td data-title="Mesa">32</td>';
+                    echo'<td data-title="Mesa">'.$row['mesa_numero'].'</td>';
                     echo'<td data-title="CPF">'.Mask("###.###.###-##",$cpf).'</td>';
                     echo'<td data-title="Pedido">'.$row2['item'].'</td>';
                     echo'<td data-title="Quantidade">'.$row2['quantidade'].'</td>';
@@ -282,7 +282,7 @@
             <?php             
             } else{
                 echo '<div style="text-align:center" class="alert alert-warning" role="alert">';
-                echo 'Ainda sem pedidos entregues!<br><br> Você só poderá fechar comanda quando todos pedidos estiverem entregues';
+                echo 'Ainda sem pedidos entregues!<br><br> Você só poderá fechar sua comanda quando todos pedidos estiverem entregues';
                 echo '</div>'; 
             } ?>
         </div>

@@ -37,7 +37,7 @@
     <link rel='stylesheet' type='text/css' href='bootstrap/css/bootstrap.min.css'>
     <link rel="stylesheet" type="text/css" href="css/estilo.css">
    
-    <script type="text/javascript" src="jquery.js"></script>
+    <script type="text/javascript" src="../jquery.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
@@ -101,7 +101,7 @@
     }
     elseif($_SESSION['nivel'] == 2){ // Perfil administrador
       echo "<div>";
-        echo ' <a href="Comanda.php" title="Sua Comanda" class="comanda badge badge-pill badge-success" style="font-size: 30px;"><i class="bi bi-receipt-cutoff"></i></a>';
+        echo ' <a href="GerenciarComandas.php" title="Sua Comanda" class="comanda badge badge-pill badge-success" style="font-size: 30px;"><i class="bi bi-receipt-cutoff"></i></a>';
       echo '</div>';
     }
 
@@ -138,12 +138,12 @@
   } elseif($_SESSION['nivel'] == 2){
 ?>  
     <div class="dropdown" >
-      <button class="dropbtn"><i style="font-size:22px" class="bi bi-person"></i></button>
+      <button class="dropbtn"><i style="font-size:20px" class="bi bi-person"></i></button>
       <div class="dropdown-content">
 <span style="font-size:15px" class="badge badge-pill badge-primary"><?php echo $nome ?></span>
-      <a href="Pedidos.php">Pedidos</a>
-      <a href="#">Itens</a>
-      <a href="Gerenciar.php">Comandas</a>
+      <a href="GerenciarPedidos.php">Pedidos</a>
+      <a href="GerenciarComandas.php">Comandas</a>
+      <a href="GerenciarMesas.php">Mesas</a>
       <form action = "acao.php" method="POST">
         <button style="margin:1px;margin-top:10px;border-radius:40px" class="btn btn-danger btn-sm btn-block" name="sair">Sair</a>
       </form>

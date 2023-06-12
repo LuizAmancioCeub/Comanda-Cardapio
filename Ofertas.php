@@ -7,6 +7,7 @@
         print "<script>location.href='Index.php';</script>";
     }
     $cpf = $_SESSION['cpf'];
+    $mesa = $_SESSION['mesa'];
    
  ?>
 <html ng-app>
@@ -161,6 +162,7 @@
     $item = $_POST['item'];
     $quantidade=$_POST['quantidade'];
     $observacao=$_POST['observacao'];
+    $mesa = $_SESSION['mesa'];
     $cpf = $_SESSION['cpf'];
 
     $consulta = $pdo->prepare("SELECT idUsuario FROM usuario where cpf = '$cpf' ");
@@ -173,14 +175,15 @@
     $rowIdItens = $sql->fetch();
     $idItem = $rowIdItens['idItens'];
 
-    $pedido = $pdo->prepare("INSERT INTO pedido (horario,Itens_idItens,quantidade,status,observacao, valor, usuario_idUsuario) 
-                                VALUES ( now(), :idItens, :quantidade, 1, :observacao, :preco, :idUsuario )");
+    $pedido = $pdo->prepare("INSERT INTO pedido (horario,Itens_idItens,quantidade,status,observacao, valor, usuario_idUsuario, mesa_numero) 
+                                VALUES ( now(), :idItens, :quantidade, 1, :observacao, :preco, :idUsuario, :mesa )");
         $pedido->execute(array(  
         ':idItens' => $idItem,
         ':quantidade' => $quantidade,
         ':observacao' => $observacao,
         ':preco' => $preco,
-        ':idUsuario' => $idUsuario
+        ':idUsuario' => $idUsuario,
+        ':mesa' => $mesa
         ));
     if($pedido == TRUE){
         print $_SESSION['msg'] =  '<div class="notification"><p>Pedido Realizado com Sucesso</p> <span class="notification__progress"></span></div>';

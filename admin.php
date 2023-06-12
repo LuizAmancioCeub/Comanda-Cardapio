@@ -24,7 +24,7 @@
             print "<script>location.href='Ofertas.php';</script>";
             die();
         } else{
-            print "<script>alert('Falha ao adicionar pedido');</script>";
+            print "<script>alert('Falha ao adicionar Item');</script>";
             print "<script>location.href='Ofertas.php';</script>";
             die();
         }                           

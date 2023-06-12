@@ -32,16 +32,11 @@ session_start();
             $_SESSION['senha'] = $senha;
             $_SESSION['cpf'] = $cpf;
             $_SESSION['nivel'] = $nivel;
-            
-            if($nivel == 2){              
-                print "<script>location.href='Home.php';</script>";
-                die();
-            }  else{
-                print "<script>location.href='Home.php';</script>";
-                die();
-            }         
-            
-   
+            $_SESSION['mesa'] = $mesa;
+                            
+            print "<script>location.href='Home.php';</script>";
+            die();        
+        
         } else{
             
                 unset ($_SESSION['senha']);
