@@ -43,7 +43,7 @@
     <div class="cards">
 
     <?php
-      $pedidos = $pdo->prepare("SELECT nome,cpf, item, descricao, imagem, mesa_numero, quantidade, horario, observacao FROM pedido 
+      $pedidos = $pdo->prepare("SELECT idPedido, idItens,nome,cpf, item, descricao, imagem, mesa_numero, quantidade, horario, observacao FROM pedido 
                                               JOIN itens on Itens_idItens = idItens 
                                               JOIN usuario on usuario_idUsuario = idUsuario
                                               WHERE status = 1 ORDER BY horario ASC");
@@ -77,16 +77,84 @@
 
             <div class="row">
               <div class="form-group col-md-12">
-                <textarea style="font-weight: bolder;background: transparent;border-radius:10px" class="form-control" name ="observacao" id="observacao" rows="3" placeholder="<?php echo $row['observacao'] ?>"readonly=""></textarea>
+                <textarea style="font-weight: bolder;background: transparent;border-radius:10px" class="form-control" name ="observacao" id="observacao" rows="2" placeholder="<?php echo $row['observacao'] ?>"readonly=""></textarea>
               </div>
             </div>
 
             <hr>
             <div class='row d-flex justify-content-center'>        
-                <button class="btn" style="background: transparent;"><i style="font-size: 25px;color:green" class="bi bi-check-lg"></i></button>
-                <button class="btn" style="background: transparent;margin-left:30px"><i style="font-size: 20px;color:red" class="bi bi-x-lg"></i></button>   
+                <button class="btn" data-toggle="modal" data-target="#enviarPedido<?php echo $row['idPedido'] ?>" style="background: transparent;"><i style="font-size: 25px;color:green" class="bi bi-check-lg"></i></button>
+                <button class="btn" data-toggle="modal" data-target="#cancelarPedido<?php echo $row['idPedido'] ?>" style="background: transparent;margin-left:30px"><i style="font-size: 20px;color:red" class="bi bi-x-lg"></i></button>   
             </div>        
           </div>
+
+
+          
+                                <div class="modal fade" id="cancelarPedido<?php echo $row['idPedido'] ?>" style="color:black;">
+                                  <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content" style=" border-radius:5px;background-color:#f8f3e8;box-shadow: 0 0 40px rgba(0, 0, 0, 0.2), 0 0 40px rgba(0, 0, 0, 0.2);">                                             
+                                      <div class="modal-header">
+                                        <h3 class="modal-title" style=" font-family: Kalam, cursive;font-weight: normal;"> <?php echo $row['item'] ?> - Mesa <?php echo $row['mesa_numero'] ?></h3>
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                      </div>
+
+                                    <form action="admin.php" method="POST">
+                                      <input type="hidden" name="idItens" value="<?php echo $row['idItens'] ?>">
+                                      <input type="hidden" name="idPedido" value="<?php echo $row['idPedido'] ?>">
+
+                                        <div class="modal-body">
+                                          <div class='form-row'>
+                                              <div class='form-group col-md-12'>
+                                                  <h4 style=' margin-top:-10px; margin-bottom:5px'>Motivo do Cancelamento:</h5>
+                                                  <textarea style="font-weight: bolder;background: transparent;border-radius:10px" class="form-control" name ="motivo" id="motivo" rows="1" required></textarea>
+                                              </div>
+                                          </div>
+
+                                          <div class="row d-flex justify-content-center">
+                                            <div class='form-row'>                                      
+                                                    <button class="btn btn-danger" name="cancelarPedido" id="cancelarPedido">Cancelar Pedido</button>
+                                            </div>  
+                                    </form> 
+                                          </div>
+                                        </div>
+
+                                    </div>
+                                  </div>
+                                </div>
+
+
+                                <div class="modal fade" id="enviarPedido<?php echo $row['idPedido'] ?>" style="color:black;">
+                                  <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content" style=" border-radius:5px;background-color:#f8f3e8;box-shadow: 0 0 40px rgba(0, 0, 0, 0.2), 0 0 40px rgba(0, 0, 0, 0.2);">                                             
+                                      <div class="modal-header">
+                                        <h3 class="modal-title" style=" font-family: Kalam, cursive;font-weight: normal;"> <?php echo $row['item'] ?> - Mesa <?php echo $row['mesa_numero'] ?></h3>
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                      </div>
+
+                                    <form action="admin.php" method="POST">
+                                      <input type="hidden" name="idItens" value="<?php echo $row['idItens'] ?>">
+                                      <input type="hidden" name="idPedido" value="<?php echo $row['idPedido'] ?>">
+
+                                        <div class="modal-body">
+                                          <div class='form-row'>
+                                              <div class='form-group col-md-12' style="text-align:center">
+                                                  <h4 style=' margin-top:-10px; margin-bottom:5px'>Confirmar Envio desse Pedido?</h5>
+                                              </div>
+                                          </div>
+
+                                          <div class="row d-flex justify-content-center">
+                                            <div class='form-row'>                                      
+                                                    <button class="btn btn-success" name="enviarPedido" id="enviarPedido">Enviar</button>
+                                            </div>  
+                                    </form> 
+                                          </div>
+                                        </div>
+
+                                    </div>
+                                  </div>
+                                </div>
+        
+                               
 <?php 
       }
     } 

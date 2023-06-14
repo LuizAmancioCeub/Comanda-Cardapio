@@ -220,7 +220,7 @@
         $rowIdUsuario = $consulta1->fetch();
         $idUsuario = $rowIdUsuario['idUsuario'];
 
-            $consulta2 = $pdo->prepare("SELECT idPedido,idItens,item, quantidade,valor,horario,observacao,preco FROM pedido JOIN itens ON idItens = Itens_idItens 
+            $consulta2 = $pdo->prepare("SELECT idPedido,idItens,item, quantidade,valor,horario,observacao,preco,mesa_numero FROM pedido JOIN itens ON idItens = Itens_idItens 
                                             WHERE Usuario_idUsuario = '$idUsuario' AND status =2 ORDER BY horario DESC");
             $consulta2->execute();
             if($consulta2->rowCount() > 0){
@@ -247,7 +247,7 @@
                     echo '<input type="hidden" name="idItens" value="'.$row2['idItens'].'">';
                     echo '<input type="hidden" name="idPedido" value="'.$row2['idPedido'].'">';
                     echo'<td data-title="Num Pedido">'.$row2['idPedido'].'</td>';
-                    echo'<td data-title="Mesa">'.$row['mesa_numero'].'</td>';
+                    echo'<td data-title="Mesa">'.$row2['mesa_numero'].'</td>';
                     echo'<td data-title="CPF">'.Mask("###.###.###-##",$cpf).'</td>';
                     echo'<td data-title="Pedido">'.$row2['item'].'</td>';
                     echo'<td data-title="Quantidade">'.$row2['quantidade'].'</td>';

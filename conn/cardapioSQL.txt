@@ -97,6 +97,7 @@ CREATE TABLE IF NOT EXISTS `cardapio`.`pedido` (
   `Itens_idItens` INT(11) NOT NULL,
   `usuario_idUsuario` INT(11) NOT NULL,
   `mesa_numero` INT NOT NULL,
+  `motivo_cancelamento` VARCHAR(145),
   PRIMARY KEY (`idPedido`),
   INDEX `fk_Pedido_Itens1_idx` (`Itens_idItens` ASC) ,
   INDEX `fk_pedido_usuario1_idx` (`usuario_idUsuario` ASC) ,

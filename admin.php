@@ -82,4 +82,42 @@
         }
     }
 
+    if(isset($_POST['cancelarPedido'])){
+        $motivo = $_POST['motivo'];
+        $idPedido = $_POST['idPedido'];
+
+        $cancelarPedido = $pdo->prepare('UPDATE pedido set status = 3, motivo_cancelamento =:motivo WHERE idPedido=:idPedido');
+        $cancelarPedido->execute(array(
+            ':motivo' => $motivo,
+            ':idPedido' => $idPedido
+        ));
+
+        if($cancelarPedido == TRUE){
+            print "<script>location.href='GerenciarPedidos.php';</script>";
+            die();
+        }else{
+            print "<script>alert('Falha ao Cancelar Pedido');</script>";
+            print "<script>location.href='GerenciarPedidos.php';</script>";
+            die();
+        }
+    }
+
+    
+    if(isset($_POST['enviarPedido'])){
+        $idPedido = $_POST['idPedido'];
+
+        $enviarPedido = $pdo->prepare('UPDATE pedido set status = 2 WHERE idPedido=:idPedido');
+        $enviarPedido->execute(array(
+            ':idPedido' => $idPedido
+        ));
+        if($enviarPedido == TRUE){
+            print "<script>location.href='GerenciarPedidos.php';</script>";
+            die();
+        }else{
+            print "<script>alert('Falha ao Enviar Pedido');</script>";
+            print "<script>location.href='GerenciarPedidos.php';</script>";
+            die();
+        }
+    }
+
     ?>

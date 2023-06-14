@@ -16,7 +16,7 @@
               echo "<div class='card h-100'  style='border-radius:30px;'>";
                 echo "<img src='imagens/".$row['imagem']."' class='card-img-top' style='border-top-left-radius:20px;border-top-right-radius:20px'>";
                 echo "<div class='card-body'>";
-                  echo "<h5 class='card-title'>".$row['item']."</h5>";
+                  echo "<h5 class='card-title' style='text-align:center'>".$row['item']."</h5>";
                   echo "<p class='card-text'>".$row['descricao']."</p>";
                   echo "<p class='card-text'><b>Valor: R$".$row['preco']."</b></p>";
                 echo "</div>";
@@ -29,105 +29,127 @@
               echo "</div>";
             echo "</div>";
 
-  //MODAL para alterar Itens
+    //MODAL para alterar Itens
 
-  echo '<div class="modal fade" id="alterarItem'.$row['idItens'].'" style="color: black">';
-    echo '<div class="modal-dialog modal-dialog-centered">';
-      echo '<div class="modal-content" style="border-radius:30px">';
+            echo '<div class="modal fade" id="alterarItem'.$row['idItens'].'" style="color: black">';
+              echo '<div class="modal-dialog modal-dialog-centered">';
+                echo '<div class="modal-content" style="border-radius:30px">';
+                          
+                echo '<div class="modal-header">';
+                  echo '<h3 name="item" id="item" style="font-family: Kalam,cursive;font-weight:600;color:#e7880c;text-align:center">'.$row['item'].'</h3>';
+                  echo '<button type="button" class="close" data-dismiss="modal">&times;</button>';
+                echo '</div>';
+
+              echo '<form action="admin.php" method="POST">';
+              echo '<input type="hidden" name="idItem" id="idItem" value="'.$row['idItens'].'">';
+                echo '<div class="modal-body">';
+
+                  $cat = $pdo->prepare("SELECT idCategorias, categoria from categorias ORDER BY categoria ASC");
+                  $cat->execute();
+                  $rowcat = $cat->fetchAll();
+
+                  echo "<div class='form-row'>";
+                    echo '<div class="form-group col-md-6">';
+                      echo '<label for="categoria" >Categoria</label>'; 
+                      echo '<select class="form-control" type="text" name="categoria" id="categoria">';
+                          echo '<option selected>'.$row['categoria'].'</option>';
+                          foreach ($rowcat as $linhacategorias) {
+                            echo "<option name value='".$linhacategorias['idCategorias']."'>".$linhacategorias['categoria']."</option>";       
+                          } 
+                      echo '</select>';    
+                    echo '</div>';
+                    
+                    echo '<div class="form-group col-sm-6">';
+                      echo '<label for="valor">Valor</label>'; 
+                      echo '<input class="form-control" type="text" name="preco" id="preco" value='.$row['preco'].'>';
+                    echo '</div>';
+
+                  echo '</div>';
+
+                  echo '<div class="form-row">';
+                    echo '<div class="form-group col-md-12">';
+                      echo '<label for="imagem">Imagem</label>';
+                      echo '<input class="form-control" type="file" name="imagem" id="imagem" required>';
+                    echo '</div>';
+                  echo '</div>'; 
+
+                  echo '<div class="form-row">';
+                    echo '<div class="form-group col-md-12">';
+                      echo '<label for="descricao">Descrição:</label>';
+                        echo '<textarea class="form-control" name ="descricao" id="descricao" rows="3">'.$row['descricao'].'</textarea>';
+                    echo '</div>';
+                  echo '</div>';
+                echo '</div>';
                 
-      echo '<div class="modal-header">';
-        echo '<h4 class="modal-title">Alterar Item</h4>';
-        echo '<button type="button" class="close" data-dismiss="modal">&times;</button>';
-      echo '</div>';
+                echo '<div class="modal-footer">';
+                  echo '<button class="btn btn-success" name="alterarItem" id="alterarItem">Alterar</button>';
+              echo '</form>';
+                  echo '<button type="button" class="btn btn-danger" data-dismiss="modal">Fechar</button>';
+                echo '</div>';
 
-    echo '<form action="admin.php" method="POST">';
-    echo '<input type="hidden" name="idItem" id="idItem" value="'.$row['idItens'].'">';
-      echo '<div class="modal-body">';
-        
-        echo "<div class='form-row'>";
-          echo '<div class="form-group col-md-12">';
-            echo '<label for="item" >Item</label>'; 
-            echo '<input class="form-control" type="text" name="item" id="item" value="'.$row['item'].'" readonly>';
-          echo '</div>';
-        echo '</div>';
-
-        $cat = $pdo->prepare("SELECT idCategorias, categoria from categorias ORDER BY categoria ASC");
-        $cat->execute();
-        $rowcat = $cat->fetchAll();
-        echo "<div class='form-row'>";
-          echo '<div class="form-group col-md-6">';
-            echo '<label for="categoria" >Categoria</label>'; 
-            echo '<select class="form-control" type="text" name="categoria" id="categoria">';
-                echo '<option selected>'.$row['categoria'].'</option>';
-                foreach ($rowcat as $linhacategorias) {
-                   echo "<option name value='".$linhacategorias['idCategorias']."'>".$linhacategorias['categoria']."</option>";       
-                } 
-            echo '</select>';    
-          echo '</div>';
+                echo '</div>';
+              echo '</div>';
+            echo '</div>';
           
-          echo '<div class="form-group col-sm-6">';
-            echo '<label for="valor">Valor</label>'; 
-            echo '<input class="form-control" type="text" name="preco" id="preco" value='.$row['preco'].'>';
-          echo '</div>';
+          // Consulta para verificar disponibilidade do item para ser excluido
+            $consultarItem = $pdo->prepare('SELECT * FROM pedido WHERE Itens_idItens = :idItens AND status=1');
+            $consultarItem->execute(array(
+              ':idItens' => $row['idItens']
+            ));
 
-        echo '</div>';
+            if($consultarItem->rowCount() == 0){
+                // MODAL para deletar Itens
+            echo '<div class="modal fade" id="excluirItem'.$row['idItens'].'" style="color: black">';
+            echo '<div class="modal-dialog modal-dialog-centered">';
+                echo '<div class="modal-content" style="border-radius:30px">';
+                        
+                echo '<div class="modal-header">';
+                echo '<h3 class="modal-title" style="font-family: Kalam,cursive;font-weight:600;color:#e7880c;text-align:center">'.$row['item'].'</h3>';
+                echo '<button type="button" class="close" data-dismiss="modal">&times;</button>';
+                echo '</div>';
 
-        echo '<div class="form-row">';
-          echo '<div class="form-group col-md-12">';
-            echo '<label for="imagem">Imagem</label>';
-            echo '<input class="form-control" type="file" name="imagem" id="imagem" required>';
-          echo '</div>';
-        echo '</div>'; 
+            echo '<form action="admin.php" method="POST">';
+            echo '<input type="hidden" name="idItens" id="idItens" value="'.$row['idItens'].'">';
+                echo '<div class="modal-body">';
+                echo "<div class='form-row'>";
+                    echo "<div class='col-md-12'>";
+                        echo "<h4 style='text-align:center; margin-top:-10px; margin-bottom:20px'>Excluir item do cardápio?</h4>";
+                    echo "</div>";
+                echo "</div>";
+                echo '<div class="row d-flex justify-content-center">';
+                echo "<div class='form-row'>";                                       
+                        echo '<button class="btn btn-success" name="excluirItem" id="excluirItem">SIM</button>';
+            echo '</form>';
+                        echo '<button style="margin-left:10px" type="button" class="btn btn-danger" data-dismiss="modal">NÃO</button>';       
+                echo "</div>";    
+                    
+                echo '</div>';
+                echo '</div>';
 
-        echo '<div class="form-row">';
-          echo '<div class="form-group col-md-12">';
-            echo '<label for="descricao">Descrição:</label>';
-              echo '<textarea class="form-control" name ="descricao" id="descricao" rows="3">'.$row['descricao'].'</textarea>';
-          echo '</div>';
-        echo '</div>';
-      echo '</div>';
-      
-      echo '<div class="modal-footer">';
-        echo '<button class="btn btn-success" name="alterarItem" id="alterarItem">Alterar</button>';
-    echo '</form>';
-        echo '<button type="button" class="btn btn-danger" data-dismiss="modal">Fechar</button>';
-      echo '</div>';
-
-      echo '</div>';
-    echo '</div>';
-  echo '</div>';
-
-  // MODAL para deletar Itens
-  echo '<div class="modal fade" id="excluirItem'.$row['idItens'].'" style="color: black">';
-  echo '<div class="modal-dialog modal-dialog-centered">';
-      echo '<div class="modal-content" style="border-radius:30px">';
-              
-      echo '<div class="modal-header">';
-      echo '<h3 class="modal-title">Excluir Item</h3>';
-      echo '<button type="button" class="close" data-dismiss="modal">&times;</button>';
-      echo '</div>';
-
-  echo '<form action="admin.php" method="POST">';
-  echo '<input type="hidden" name="idItens" id="idItens" value="'.$row['idItens'].'">';
-      echo '<div class="modal-body">';
-      echo "<div class='form-row'>";
-          echo "<div class='col-md-12'>";
-              echo "<h4 style='text-align:center; margin-top:-10px; margin-bottom:20px'>Excluir item?</h4>";
-          echo "</div>";
-      echo "</div>";
-      echo '<div class="row d-flex justify-content-center">';
-      echo "<div class='form-row'>";                                       
-              echo '<button class="btn btn-success" name="excluirItem" id="excluirItem">SIM</button>';
-  echo '</form>';
-              echo '<button style="margin-left:10px" type="button" class="btn btn-danger" data-dismiss="modal">NÃO</button>';       
-      echo "</div>";    
-          
-      echo '</div>';
-      echo '</div>';
-
-      echo '</div>';
-  echo '</div>';
-  echo '</div>';
+                echo '</div>';
+            echo '</div>';
+            echo '</div>';
+            }
+            elseif(($consultarItem->rowCount() > 0) || ($consultarItem->rowCount() < 0)){
+              echo '<div class="modal fade" id="excluirItem'.$row['idItens'].'" style="color: black">';
+                echo '<div class="modal-dialog modal-dialog-centered">';
+                  echo '<div class="modal-content" style="background:transparent;border:none">';
+                          
+                    echo '<div class="modal-header justify-content-center">';
+                      echo '<input type="hidden" name="idItens" id="idItens" value="'.$row['idItens'].'">';
+                      echo '<div class="alert alert-warning" role="alert"style="text-align:center">
+                              <button type="button" class="close" data-dismiss="modal">&times;</button>
+                              <h4 class="alert-heading"> <i class="bi bi-exclamation-triangle"></i></h4>
+                              <p>Não é possível excluir esse item do Cardápio! <br><br>
+                                Necessário cancelar ou concluir o preparo de Pedidos com este item<p>
+                            </div>';
+                    echo '</div>';
+  
+                  echo '</div>';
+                echo '</div>';
+              echo '</div>';
+            }
+  
         }
         
       } else{
