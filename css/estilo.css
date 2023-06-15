@@ -7,8 +7,6 @@ body{
   margin: 0;
   background-color: #E5E5E5;
   font-family: 'Rubik', sans-serif;
-  margin-left:2px;
-  margin-right:2px;
 }
 
 
@@ -58,31 +56,79 @@ h5{
     z-index:1000;
 
   }
-  .card{
-    border-radius: 15px;
-    background-color: #F8F8FF;
-
-  }
-  .col{
-    box-shadow: 2px 9px 49px -17px rgba(105, 105, 105, 1);
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+    gap: 2rem;
+    padding: 1rem;
   }
   
-  
-  
-
-  @media only screen and (max-width: 700px){
-    
-
-      .col{
-        margin-top: 12px;
-      }
-      .comanda{
+  @media screen and (max-width: 750px ) {
+    .cards{
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.7rem;
+      padding: 1rem;
+    }
+    .comanda{
         margin-left: 80%;
       }
-      h1{
+    h1{
         margin-top: 25%;
       }
+    .btnC{
+        border-radius: 10px;
+        width: 100%;
+      }
+  }
+  @media screen and (max-width: 347px ) {
+    .cards{
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0.7rem;
+      padding: 1rem;
+    }
+  }
+  
+  .cardi {
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    background: #f8f3e8;
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.2), 0 0 40px rgba(0, 0, 0, 0.2);
+    border-radius: 12px;
+  }
+  
+  .cardi > img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 600/400;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+  }
+  
+  .cardi > h4 {
+    margin-top: 1rem;
+    font-family: "Kalam", cursive;
+    font-weight: 600;
+    font-size: 1.7rem;
+    color: #4a4a7d;
+    text-align: center;
+  }
+  
+  .cardi > p {
+    font-family: "Kalam", cursive;
+    font-size: 1rem;
+    color: #5e5e89;
+    text-align: left;
+    padding-right: 1rem;
+    padding-left: 1rem;
+    padding-top: 0.4rem;
+  }
+  .btnC{
+    border-radius: 10px;
+    width: 100%;
+  }
+  
 
-      
-}
  
