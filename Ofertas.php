@@ -64,10 +64,10 @@
             while($row = $item->fetch(PDO::FETCH_ASSOC)){
 
                 echo '<div class="cardi h-100">';
-                    echo '<img src="imagens/'.$row["imagem"].'"/>';
-                    echo '<h4>'.$row["item"].'</h4>';
-                    echo '<p>'.$row["descricao"].'</p>';
-                    echo '<p><b>Valor: R$ '.$row["preco"].'</b></p>';
+                    echo '<img name="imagem" id="imagem" src="imagens/'.$row["imagem"].'"/>';
+                    echo '<h4 name="item" id="item">'.$row["item"].'</h4>';
+                    echo '<p name="descricao" id="descricao">'.$row["descricao"].'</p>';
+                    echo '<p name="preco" id="preco"><b>Valor: R$ '.$row["preco"].'</b></p>';
                     echo '<hr style="background-color: black">';
                     echo '<div class="card-footer" style="text-align: center; justify-content: center;">';
                     if($_SESSION['nivel'] == 0){
@@ -91,7 +91,7 @@
                         echo '<button type="button" class="close" data-dismiss="modal">&times;</button>';
                       echo '</div>';
               
-                    echo '<form action="Ofertas.php" method="POST">';
+                    echo '<form action="acao.php" method="POST">';
                     echo '<input type="hidden" name="idItem" id="idItem" value="'.$row['idItens'].'">';
                       echo '<div class="modal-body">';
                         echo "<div class='form-row'>";
@@ -104,7 +104,7 @@
                         echo '<div class="form-row">';
                           echo '<div class="form-group col-md-6">';
                             echo '<label for="quantidade">Quantidade</label>';
-                            echo '<input class="form-control" type="number" ng-model="qntd" name="quantidade" value=1 id="quantidade" required min="1" max="5">';
+                            echo '<input class="form-control" type="number" ng-model="qntd" name="quantidade" value="1" id="quantidade" required min="1" max="5">';
                           echo '</div>';
                           echo '<div class="form-group col-sm-6">';
                             echo '<label for="valor">Valor</label>'; 
@@ -142,7 +142,7 @@
     <br><br>
     <?php
         include 'corpo/footer.html';
-
+/*
 
         if(isset($_POST['realizarPedido'])){
             $preco = $_POST['preco'];
@@ -173,7 +173,8 @@
                 ':mesa' => $mesa
                 ));
             if($pedido == TRUE){
-                print $_SESSION['msg'] =  '<div class="notification"><p>Pedido Realizado com Sucesso</p> <span class="notification__progress"></span></div>';
+              print "<script>location.href='Ofertas.php';</script>";
+              //print $_SESSION['msg'] =  '<div class="notification"><p>Pedido Realizado com Sucesso</p> <span class="notification__progress"></span></div>';
                 die();
             } else{
                 print "<script>alert('Falha ao realizar pedido');</script>";
@@ -181,7 +182,7 @@
                 die();
             }
         
-        }
+        }  */
     ?>
 </body>
 </html>

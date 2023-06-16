@@ -53,7 +53,7 @@
         
         if($sql == TRUE){
             print "<script>location.href='Ofertas.php';</script>";
-            $_SESSION['msg'] = "<script>alert('Item alterado com Sucesso');</script>";
+            
             die();
         } else{
             print "<script>alert('Falha ao alterar pedido');</script>";

@@ -1,5 +1,5 @@
 
-    <button class="btn btn-info" type="button" data-toggle='modal' data-target='#incluirItem'>Adicionar item <i class="bi bi-plus-circle"></i></button>   
+    <button style="margin-left:15px" class="btn btn-info" type="button" data-toggle='modal' data-target='#incluirItem'>Adicionar item <i class="bi bi-plus-circle"></i></button>   
        
 <?php 
 
@@ -8,26 +8,25 @@
                             JOIN categorias ON Categorias_idCategorias = idCategorias 
                             WHERE Categorias_idCategorias = 1 ORDER BY item ASC');
     $item->execute();
-    echo "<div class='row row-cols-2 row-cols-md-3 g-4'>";
+    echo '<div class="cards">';
       if($item->rowCount() > 0){
         while($row = $item->fetch(PDO::FETCH_ASSOC)){
-            echo "<input type='hidden' name='idItens' id='idItens' value='".$row['idItens']."'>";
-            echo "<div class='col' style='border-radius:30px'>";
-              echo "<div class='card h-100'  style='border-radius:30px;'>";
-                echo "<img src='imagens/".$row['imagem']."' class='card-img-top' style='border-top-left-radius:20px;border-top-right-radius:20px'>";
-                echo "<div class='card-body'>";
-                  echo "<h5 class='card-title' style='text-align:center'>".$row['item']."</h5>";
-                  echo "<p class='card-text'>".$row['descricao']."</p>";
-                  echo "<p class='card-text'><b>Valor: R$".$row['preco']."</b></p>";
-                echo "</div>";
-                echo "<div class='card-footer'>";
-                  echo "<div class='row d-flex justify-content-center'>";
-                    echo "<button style='border-radius:30px;' class='btn btn-success' type='button' data-toggle='modal' data-target='#alterarItem".$row['idItens']."'><i class='bi bi-pencil'></i></button>";
-                    echo "<button style='border-radius:30px' class='btn btn-danger' type='button' data-toggle='modal' data-target='#excluirItem".$row['idItens']."'><i class='bi bi-trash3'></i></button>";   
-                  echo "</div>";
+
+          echo '<div class="cardi h-100">';
+                    echo '<img name="imagem" id="imagem" src="imagens/'.$row["imagem"].'"/>';
+                    echo '<h4 name="item" id="item">'.$row["item"].'</h4>';
+                    echo '<p name="descricao" id="descricao">'.$row["descricao"].'</p>';
+                    echo '<p name="preco" id="preco"><b>Valor: R$ '.$row["preco"].'</b></p>';
+                    echo '<hr style="background-color: black">';
+                    echo '<div class="card-footer" style="text-align: center; justify-content: center;">';
+                      echo "<button style='border-radius:30px;' class='btn btn-success' type='button' data-toggle='modal' data-target='#alterarItem".$row['idItens']."'><i class='bi bi-pencil'></i></button>";
+                      echo "<button style='border-radius:30px' class='btn btn-danger' type='button' data-toggle='modal' data-target='#excluirItem".$row['idItens']."'><i class='bi bi-trash3'></i></button>";   
                     echo "</div>";
-              echo "</div>";
-            echo "</div>";
+            echo '</div>';
+
+
+
+            
 
     //MODAL para alterar Itens
 
@@ -42,6 +41,7 @@
 
               echo '<form action="admin.php" method="POST">';
               echo '<input type="hidden" name="idItem" id="idItem" value="'.$row['idItens'].'">';
+              echo '<input type="hidden" name="item" id="item" value="'.$row['item'].'">';
                 echo '<div class="modal-body">';
 
                   $cat = $pdo->prepare("SELECT idCategorias, categoria from categorias ORDER BY categoria ASC");

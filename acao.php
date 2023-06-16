@@ -101,6 +101,15 @@ session_start();
 
        
     }
+      
+
+    // Sair do Login 
+    if((isset($_POST['sair'])) || (isset($_POST['sairM']))){
+        session_destroy();
+        print "<script>location.href='Index.php';</script>";
+        
+    }
+
 
     //Pedido
     
@@ -109,44 +118,39 @@ session_start();
         $item = $_POST['item'];
         $quantidade=$_POST['quantidade'];
         $observacao=$_POST['observacao'];
+        $mesa = $_SESSION['mesa'];
         $cpf = $_SESSION['cpf'];
-
+    
         $consulta = $pdo->prepare("SELECT idUsuario FROM usuario where cpf = '$cpf' ");
         $consulta->execute();
         $rowIdUsuario = $consulta->fetch();
         $idUsuario = $rowIdUsuario['idUsuario'];
-
+    
         $sql = $pdo->prepare("SELECT idItens FROM itens where item = '$item' ");
         $sql->execute();
         $rowIdItens = $sql->fetch();
         $idItem = $rowIdItens['idItens'];
-
-        $pedido = $pdo->prepare("INSERT INTO pedido (horario,Itens_idItens,quantidade,status,observacao, valor, usuario_idUsuario) 
-                                    VALUES ( now(), :idItens, :quantidade, 1, :observacao, :preco, :idUsuario )");
+    
+        $pedido = $pdo->prepare("INSERT INTO pedido (horario,Itens_idItens,quantidade,status,observacao, valor, usuario_idUsuario, mesa_numero) 
+                                    VALUES ( now(), :idItens, :quantidade, 1, :observacao, :preco, :idUsuario, :mesa )");
             $pedido->execute(array(  
             ':idItens' => $idItem,
             ':quantidade' => $quantidade,
             ':observacao' => $observacao,
             ':preco' => $preco,
-            ':idUsuario' => $idUsuario
+            ':idUsuario' => $idUsuario,
+            ':mesa' => $mesa
             ));
         if($pedido == TRUE){
-           print  "<script>location.href='Ofertas.php';</script>";
-           print $_SESSION['msg'] =  '<div class="notification"><p>Pedido Realizado com Sucesso</p> <span class="notification__progress"></span></div>';
+          print "<script>location.href='Ofertas.php';</script>";
+          //print $_SESSION['msg'] =  '<div class="notification"><p>Pedido Realizado com Sucesso</p> <span class="notification__progress"></span></div>';
             die();
         } else{
             print "<script>alert('Falha ao realizar pedido');</script>";
             print "<script>location.href='Comanda.php';</script>";
             die();
         }
-
-    }
-
-    // Sair do Login 
-    if((isset($_POST['sair'])) || (isset($_POST['sairM']))){
-        session_destroy();
-        print "<script>location.href='Index.php';</script>";
-        
+    
     }
 
 ?>
