@@ -18,10 +18,6 @@ label{
     }
 }
     
-
-
-
-
 .container{
     width: 100%;
     height: 100vh;
@@ -184,4 +180,6 @@ color: white;
 .input__icon:hover {
 	color: #333;
 }
+
+
 

@@ -15,18 +15,8 @@ require('conn/conn.php');
     <link rel='stylesheet' type='text/css' href='bootstrap/css/bootstrap.min.css'>
     
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.2.0/fonts/remixicon.css" rel="stylesheet"/>
-
     <link rel="stylesheet" type="text/css" href="css/estilo.css">
-    <link rel="stylesheet" type="text/css" href="css/index.css">
-    
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
-    
-    <style>
-       
-    </style>
-    
+    <link rel="stylesheet" type="text/css" href="css/index.css">   
 </head>   
 <body>  
 
@@ -42,7 +32,7 @@ require('conn/conn.php');
                     <?php
                         foreach ($rowMesas as $linhamesas) {
                     ?>
-                    <option name value="<?php echo $linhamesas['numero'] ?> "> Mesa <?php echo $linhamesas['numero']; echo ' -- '.$linhamesas['capacidade']; ?> Lugares </option>
+                    <option name value="<?php echo $linhamesas['numero'] ?> "> Mesa <?php echo $linhamesas['numero']; ?> </option>
                     <?php 
                   
                         } 
@@ -157,6 +147,10 @@ require('conn/conn.php');
             inputPassword.type =
                 inputPassword.type === 'password' ? 'text' : 'password'
         })
-    </script>      
-        
+    </script> 
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>        
 </html>

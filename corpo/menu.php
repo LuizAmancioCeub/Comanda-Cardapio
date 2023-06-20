@@ -88,7 +88,7 @@
       <div>
         <a href="Comanda.php" title="Sua Comanda" class="comanda badge badge-pill badge-success" style="font-size: 30px;">
           <i class="bi bi-receipt-cutoff"></i> 
-          <span style="font-size:17px;margin-top:-20px;border-radius:10px" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+          <span style="font-size:17px;margin-top:-20px;border-radius:10px;color:black" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-warning">
               <?php echo $qntdPedidos ?> </span>
         </a>
       </div>

@@ -59,6 +59,7 @@ session_start();
             $_SESSION['senha'] = 'visitante';
             $_SESSION['cpf'] = 'visitante';
             $_SESSION['nivel'] = 0;
+            $_SESSION['mesa'] = null;
             print "<script>location.href='Home.php';</script>";
             die();
         }

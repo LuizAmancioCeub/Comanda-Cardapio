@@ -36,19 +36,21 @@
         $preco=$_POST['preco'];
         $descricao=$_POST['descricao'];
         $imagem = $_POST["imagem"];
+        $categoria = $_POST['categoria'];
 
         $consulta = $pdo->prepare("SELECT idItens FROM itens where item = '$item' ");
         $consulta->execute();
         $rowIdItens = $consulta->fetch();
         $idItem = $rowIdItens['idItens'];
 
-        $sql = $pdo->prepare('UPDATE itens SET imagem=:imagem, preco=:preco, descricao=:descricao
+        $sql = $pdo->prepare('UPDATE itens SET imagem=:imagem, preco=:preco, descricao=:descricao, Categorias_idCategorias = :categoria
                                 WHERE idItens=:idItens');
         $sql->execute(array(
             ':imagem' => $imagem,
             ':preco' => $preco,
             ':descricao' => $descricao,
-            ':idItens' => $idItem
+            ':idItens' => $idItem,
+            ':categoria' => $categoria
         )); 
         
         if($sql == TRUE){

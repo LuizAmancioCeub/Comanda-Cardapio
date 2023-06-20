@@ -163,7 +163,7 @@ INSERT INTO `usuario` (`cpf`, `nome`, `email`, `senha`, `perfil_nivel`) VALUES
 
 INSERT INTO `categorias` (`idCategorias`, `categoria`) VALUES
 (1, 'Ofertas'),
-(2, 'Hambúrgueres e Massas'),
+(2, 'Burguers e Massas'),
 (3, 'Bebidas'),
 (4, 'Acompanhamentos'),
 (5, 'Sobremesas'),
@@ -171,10 +171,11 @@ INSERT INTO `categorias` (`idCategorias`, `categoria`) VALUES
 
 
 INSERT INTO `itens` ( `item`, `preco`, `descricao`, `Categorias_idCategorias`, `imagem`) VALUES
-( 'Macarronada Vai Dentro', 28.5, '500g Macarrão, Molho de tomate, queijo parmesão ralado.', 1, 'macarrao.jfif'),
-( 'X-Cabuloso', 28.5, 'Hambúrguer Artesanal na chapa - 200g de Picanha, 50g Queijo, Alface, Tomate, Cebola e 10g de Bacon.', 1, 'hamburguer.jfif'),
-( 'Lasanha à Bolonhesa', 26.9, 'Massa recheada com molho à bolonhesa, carne moída e presunto, coberta com molho branco e mussarela.', 1, 'lasanha.jfif'),
-( 'X-Vale Dois', 49.99, 'Dois Hambúrgueres - 500g de carne, alface, cheddar, tomate, cebola e Bacon.', 1, 'hamburguer2.jpg');
+( 'Macarronada Vai Dentro', 28.5, '500g Macarrão, Molho de tomate, queijo parmesão ralado.', 1, 'macarrao.jpg'),
+( 'X-Cabuloso', 28.5, 'Hambúrguer Artesanal na chapa - 200g de Picanha, 50g Queijo, Alface, Tomate, Cebola e 10g de Bacon.', 1, 'hamburguer.jpg'),
+( 'Lasanha à Bolonhesa', 26.9, 'Massa recheada com molho à bolonhesa, carne moída e presunto, coberta com molho branco e mussarela.', 1, 'lasanha.jpg'),
+( 'X-Vale Dois', 49.99, 'Dois Hambúrgueres - 500g de carne, alface, cheddar, tomate, cebola e Bacon.', 1, 'hamburguer2.jpg'),
+( 'Costelinha Suína', 56.58, 'Costelinha levada a brasa durante 34 horas, servida com molho barbecue e shoyo.', 1, 'costelinha.jfif');
 
 INSERT INTO `mesa` (`numero`, `capacidade`,`status`) VALUES 
 (10, 4, 'Disponível'),

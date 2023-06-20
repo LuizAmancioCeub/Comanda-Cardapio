@@ -30,18 +30,8 @@
       <?php // background-color: #FEFFEE;
           include "corpo/menu.php";
           ?>  
-            <h1>Destaques do nosso Cardápio</h1>
+            <h1>Burguers e Massas</h1>
 
-        <section id="sliderhome">
-          <div id="meuSlider" class="carousel slide align-items-center" data-ride="carousel">
-            <div class="carousel-inner  mx-auto text-center">
-              <div class="item active"><img style="border-radius: 20px" class="img-responsive" src="imagens/happy.jpg" width="100%"></div>
-            </div>
-            <a class="left carousel-control" href="#meuSlider" data-slide="prev"></a>
-            <a class="right carousel-control" href="#meuSlider" data-slide="next"><span class=""></span></a>
-          </div>
-        </section>
-        <br>     
     </div>
         <?php
 
@@ -50,7 +40,7 @@
       include "admin/OfertasAdmin.php";
     } 
     elseif(($_SESSION['nivel'] == 1) OR ($_SESSION['nivel'] == 0)){  
-      $item = $pdo->prepare('SELECT item, descricao, preco, imagem, idItens FROM itens WHERE Categorias_idCategorias = 1 ORDER BY item ASC');
+      $item = $pdo->prepare('SELECT item, descricao, preco, imagem, idItens FROM itens WHERE Categorias_idCategorias = 2 ORDER BY item ASC');
       $item->execute();
         
         echo '<div class="cards">';
